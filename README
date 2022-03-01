@@ -1,0 +1,101 @@
+--------------------------- TEMA 3 --------------------------------------------------------------------------------------------
+
+tema3.c:
+	->Reprezinta sursa principala a programului in care vom apela cerintele in functie
+	de argumentele primite in lina de comanda.
+
+solve.c:
+	->Aici se va realiza citirea din fisier si se vor apela cerintele in sine(task1, task2)	
+
+util.c:
+	->Aici se gasesc functiile ajutatoare pentru rezolvarea taskurilor.
+
+------------------------------------------------------------------------------------------------------------------------------
+
+-structura de date principala va fi un graf orientat aciclic reprezentat prin liste de adiacenta.
+
+-Graful, pe langa listele de adiacenta, mai in structura, un vector de pointeri la structuri("names", cu structura "content")
+care va simula pe parcursul programului modificarile aferente aduse nodurilor din grafuri.
+
+-Vectorul names contine structuri ce retin : numele nodului, pozitia in vectorul de liste, si un vector de parinti.
+
+-Deci, pe masura ce vom modifica graful , va trebui sa modificam si acest vector "names".
+
+-Fiecare nod din listele de adiacenta are informatii reprezentate tot prin structuri de tip "content".
+
+------------------------------------------------------------------------------------------------------------------------------
+
+
+							task1():
+	
+	-Vom citi din fisier pentru a crea graful
+	
+	-Pe masura ce citim un nod , acesta este adaugat in vectorul names care va retine si pozitia acestui
+	in vectorul de liste de adiacente (pozitia unui nod este data de ordinea citirii din fisier).
+	
+	-Prin functia addEdgeList() formam graful.
+	
+	-Ne folosim de functia cycle() pentru a detecta daca exista un ciclu in graf.
+	
+	-Functia cycle() este o varianta a DFS-ului care verifica daca ne intoarcem in acelasi nod.
+
+
+							task2():
+	
+	-Procesul de creare a grafului este acelasi, doar ca de data aceasta va fi repetat de mai multe ori
+	(in functie de numarul de interogari).
+	
+	-Totodata , vom crea si un vector de pozitii "position" care va inregistra prin valoarea "1" nodurile 
+	principale si prin valoarea "2" variabilele prin care observam aceste noduri principale.Acest vector
+	va fi transmis si , aferent, modificat din functie in functie (step1->step2->step3->step4->step5)
+	deoarece la final vom avea nevoie de el.
+	
+
+	->step_1():
+		-Pentru a construi graful ancestral aplicam DFS pentru fiecare nod in parte si verificam daca
+		are in drumul sau unul dintre nodurile propuse spre prelucrare. Daca nu are, vom elimina toate
+		muchiile care duc la acesta prin functia removeEdgeList(), il vom sterge din vectorul de adiacente
+		si il vom sterge si din vectorul "names".
+		
+		-Vom modifica vectorul de pozitii.
+		
+		-Vom restitui indicii nodurilor din listele de adiacente.
+
+	->step_2():
+		
+		-Folosindu-ne de vectorul de parinti ale fiecarui element din "names" , verificam daca un nod
+		are 2 sau mai multi parinti pentru a-i uni prin functia addEdgeList() (in aceasta functie, odata
+		cu adaugarea nodurilor , este actualizat si vectorul de parinti).
+
+	->step_3():
+		-In aceasta functie ne vom folosi din nou de functia addEdgeList() pentru a transforma graful orientat
+		intr-unul neorientat.
+
+	->step_4():
+		-In aceasta functie ne vom folosi de vectorul de pozitii pentru a vedea care noduri au inregistrata valoarea
+      		"2" (adica este o variabila prin care se realizeaza observare nodurilor principale) si vom realiza procesul de
+		eliminare ca in step_1().
+
+	->step_5():
+		-Aici ne vom folosi iarasi de vectorul de pozitii , pentru a "recupera" de data asta nodurile principale.
+		
+		-Cream un "path" prin DFS pornind de la primul nod principal (A) .Daca in acst "path" exista celalalt nod(B)
+		atunci inseamna ca ele sunt neindependente, altfel , ele sunt independente. 
+		
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
